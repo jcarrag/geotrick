@@ -24,4 +24,5 @@ cargo hf2 --release
 ### Helpful resources
 * https://github.com/rust-embedded/awesome-embedded-rust
 * https://github.com/atsamd-rs/atsamd/tree/master/boards/feather_m0
+* https://github.com/jonas-schievink/rubble/tree/master/demos/nrf52-beacon
 * https://learn.adafruit.com/adafruit-feather-m0-bluefruit-le?view=all
