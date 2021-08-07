@@ -17,18 +17,7 @@
         devShell.${system} = mkShell {
           buildInputs = [
             rls
-
-            # cargo-binutils
-            # cargo-generate
-            # gdb
-            # openocd
-            # openssl
-            # pkg-config
-            # qemu
             rust
-            # rustup
-
-            libusb
           ];
         };
       };
