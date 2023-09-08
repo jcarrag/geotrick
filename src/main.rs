@@ -1,53 +1,22 @@
-#![no_main]
 #![no_std]
+#![no_main]
 
-use embedded_hal::digital::v2::InputPin;
-use embedded_hal::digital::v2::OutputPin;
-use nrf52840_hal as hal;
-use nrf52840_hal::gpio::Level;
-use rtt_target::{rprintln, rtt_init_print};
+use cortex_m_semihosting::hprintln;
+// pick a panicking behavior
+// use panic_halt as _; // you can put a breakpoint on `rust_begin_unwind` to catch panics
+// use panic_abort as _; // requires nightly
+// use panic_itm as _; // logs messages over ITM; requires ITM support
+use panic_semihosting as _; // logs messages to the host stderr; requires a debugger
 
-#[panic_handler] // panicking behavior
-fn panic(_: &core::panic::PanicInfo) -> ! {
-    loop {
-        cortex_m::asm::bkpt();
-    }
-}
+// use cortex_m::asm;
+use cortex_m_rt::entry;
 
-#[cortex_m_rt::entry]
+#[entry]
 fn main() -> ! {
-    rtt_init_print!();
-    // let p = hal::pac::Peripherals::take().unwrap();
-    // let port0 = hal::gpio::p0::Parts::new(p.P0);
-    // let mut led = port0.p0_13.into_push_pull_output(Level::Low);
+    // asm::nop(); // To not have main optimize to abort in release mode, remove when you add code
+    hprintln!("Hello, world");
 
-    // let mut toggle = 0;
-
-    // rprintln!("Blinky button demo starting");
-    // loop {
-    //     toggle += 1;
-    //     if toggle % 1000000 == 0 {
-    //         rprintln!("is % 1000000");
-    //         led.set_high().unwrap();
-    //     } else {
-    //         // rprintln!("is not % 1000");
-    //         led.set_low().unwrap();
-    //     }
-    // }
-    let p = hal::pac::Peripherals::take().unwrap();
-    let port0 = hal::gpio::p0::Parts::new(p.P0);
-    let button = port0.p0_11.into_pullup_input();
-    let mut led = port0.p0_13.into_push_pull_output(Level::Low);
-    // let mut led = port0.p0_13.degrade().into_push_pull_output(Level::Low)
-
-    rprintln!("Blinky button demo starting");
     loop {
-        if button.is_high().unwrap() {
-            rprintln!("button high");
-            led.set_high().unwrap();
-        } else {
-            rprintln!("button low");
-            led.set_low().unwrap();
-        }
+        hprintln!("Hello there");
     }
 }
