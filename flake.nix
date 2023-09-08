@@ -21,6 +21,10 @@
           rust
           gdb
           openocd
+
+          # needed for `cargo install probe-run`
+          pkg-config
+          libudev-zero
         ];
       };
     };

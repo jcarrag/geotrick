@@ -1,37 +1,19 @@
-[target.thumbv7m-none-eabi]
-# uncomment this to make `cargo run` execute programs on QEMU
-# runner = "qemu-system-arm -cpu cortex-m3 -machine lm3s6965evb -nographic -semihosting-config enable=on,target=native -kernel"
-
 [target.'cfg(all(target_arch = "arm", target_os = "none"))']
-# uncomment ONE of these three option to make `cargo run` start a GDB session
-# which option to pick depends on your system
-# runner = "arm-none-eabi-gdb -q -x openocd.gdb"
-# runner = "gdb-multiarch -q -x openocd.gdb"
-runner = "gdb -q -x openocd.gdb"
-
+# (..)
 rustflags = [
-  # Previously, the linker arguments --nmagic and -Tlink.x were set here.
-  # They are now set by build.rs instead. The linker argument can still
-  # only be set here, if a custom linker is needed.
+  "-C", "linker=flip-link", # adds stack overflow protection
+  "-C", "link-arg=-Tdefmt.x", # defmt support
+  # (..)
+]
 
-  # By default, the LLD linker is used, which is shipped with the Rust
-  # toolchain. If you run into problems with LLD, you can switch to the
-  # GNU linker by uncommenting this line:
-  # "-C", "linker=arm-none-eabi-ld",
-
-  # If you need to link to pre-compiled C libraries provided by a C toolchain
-  # use GCC as the linker by uncommenting the three lines below:
-  # "-C", "linker=arm-none-eabi-gcc",
-  # "-C", "link-arg=-Wl,-Tlink.x",
-  # "-C", "link-arg=-nostartfiles",
+[target.thumbv7em-none-eabihf]
+# set custom cargo runner to flash & run on embedded target when we call `cargo run`
+# for more information, check out https://github.com/knurling-rs/probe-run
+runner = "probe-run --chip nRF52840_xxAA --erase-all"
+rustflags = [
+  "-C", "link-arg=-Tlink.x",
 ]
 
 [build]
-# Pick ONE of these default compilation targets
-# target = "thumbv6m-none-eabi"        # Cortex-M0 and Cortex-M0+
-# target = "thumbv7m-none-eabi"        # Cortex-M3
-# target = "thumbv7em-none-eabi"       # Cortex-M4 and Cortex-M7 (no FPU)
-target = "thumbv7em-none-eabihf"     # Cortex-M4F and Cortex-M7F (with FPU)
-# target = "thumbv8m.base-none-eabi"   # Cortex-M23
-# target = "thumbv8m.main-none-eabi"   # Cortex-M33 (no FPU)
-# target = "thumbv8m.main-none-eabihf" # Cortex-M33 (with FPU)
+# cross-compile to this target
+target = "thumbv7em-none-eabihf" # = ARM Cortex-M4
