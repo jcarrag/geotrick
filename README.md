@@ -71,3 +71,4 @@ Hello there
 - Guide to Rust embedded: https://docs.rust-embedded.org/book/start/hardware.html
 - Guide to Rust embedded debugging: https://docs.rust-embedded.org/debugonomicon/
 - More thorough guide to embedded: https://embedded-trainings.ferrous-systems.com/
+- Neopixel bitbanging guide: https://www.hackster.io/dcaponi1/bit-banging-ws2812-in-rust-bb30bc
