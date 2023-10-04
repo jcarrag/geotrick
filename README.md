@@ -30,10 +30,11 @@ ATTRS{idVendor}=="1366", ATTRS{idProduct}=="0101", MODE="0666", TAG+="uaccess", 
 
 1. Connect the J-Link EDU mini to the laptop
 2. Power the nrf52840 (by connecting it to the laptop)
-3. Run `sudo cargo run` which will connect via `probe-run` (need `sudo` because of the udev issues mentioned above)
+3. Run `cargo run --release` which will connect via `probe-run`
+   1. `--release` otherwise the signal speed is too low to drive the neopixel
 
 ```
-$ sudo cargo run
+$ cargo run --release
     Finished dev [unoptimized + debuginfo] target(s) in 0.03s
      Running `probe-run --chip nRF52840_xxAA --erase-all target/thumbv7em-none-eabihf/debug/geotrick`
 (HOST) INFO  flashing program (4 pages / 16.00 KiB)
