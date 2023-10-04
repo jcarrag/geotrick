@@ -26,6 +26,10 @@
           pkg-config
           libudev-zero
         ];
+
+        shellHook = ''
+          export DEFMT_LOG=warn
+        '';
       };
     };
 }
